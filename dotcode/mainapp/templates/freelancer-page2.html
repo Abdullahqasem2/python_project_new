@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% load static %}
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/c.css'%}">
+        <link rel="jsdelivr" href="{% static 'js/test.js'%}">
+
+    <style>
+        html,body,h1, h2,h3,h4,h5 {
+            font-family: "Open Sans", sans-serif
+        }
+    </style>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+
+<body class="w3-theme-l5">
+
+    <div class="con" style="margin: 0 auto; height: auto;width: 1111px;">
+        <header style="display:flex; justify-content: space-between; margin: 15px; position: sticky;">
+           <h2> Welcome {{request.session.first}}  {{request.session.last}}</h2>
+            <div class="class1">
+                <p><a class="link-primary" href="/main/wallfeed">WallFeed</a> |<a class="link-primary"
+                        href="/main/community">Communtiy</a> | <a class="link-danger" href="/log/logout">Logout</a> </p>
+            </div>
+        </header>
+
+      
+        <hr><br>
+        
+
+            {% if request.session.user_id == asd.id %}
+        
+            <div>
+         
+            	<form action="/main/Add-reply/{{ request.session.user_id }}" method="POST">
+                    {% csrf_token %}
+            	<div class="massenger">
+				  <div class="title">
+				    <div class="img-profile">
+				      <img src="{{sender.img}}" />
+				    </div>
+				    <span>{{asd.first_name}}</span>
+				    <i class="fas fa-lg fa-ellipsis-v"></i>
+				  </div>
+                   <iframe src='/main/chat'  title="W3Schools Free Online Web Tutorials" style="height: 400px;"></iframe> 
+
+
+				    <div id="chatBoxSend">
+				      <span id="smile">
+				        <i class="fa fa-smile" aria-hidden="true"></i>
+				      </span>
+				      <input placeholder="Message..." type="text" id="msgBoxSend" name="masg" />
+				      <span id="sendMsg">
+				        <input type="submit" name="sendMsg" value="send">
+				      </span>
+				    
+				  </div>
+				</div>
+				</form>
+			
+        {%  endif %}
+
+{% if request.session.user_id != asd.id %}
+
+{% if asd.role.role == "freelancer" %}
+
+<h1> <img src="/media/{{asd.img}}" style="height: 70px;width: 70px;">  {{asd.first_name}} {{asd.last_name}}'s profile</h1>
+<h4>Description: </h4>
+<p>{{info.description}}</p>
+<h4>Language:</h4>
+<p>{% for i in lang %}{{i.name}}<br>{% endfor %}</p>
+
+
+<h4>Education</h4>
+<p>{{info.education}}</p>
+
+<form action="/main/Add-reply/{{ request.session.user_id }}" method="POST">
+                    {% csrf_token %}
+                <div class="massenger">
+                  <div class="title">
+                    <div class="img-profile">
+                      <img src="{{sender.img}}" />
+                    </div>
+                    <span>{{asd.first_name}}</span>
+                    <i class="fas fa-lg fa-ellipsis-v"></i>
+                  </div>
+                   <iframe src='/main/chat'  title="W3Schools Free Online Web Tutorials" style="height: 400px;"></iframe> 
+
+
+                    <div id="chatBoxSend">
+                      <span id="smile">
+                        <i class="fa fa-smile" aria-hidden="true"></i>
+                      </span>
+                      <input placeholder="Message..." type="text" id="msgBoxSend" name="masg" />
+                      <span id="sendMsg">
+                        <input type="submit" name="sendMsg" value="send">
+                      </span>
+                    
+                  </div>
+                </div>
+                </form>
+
+<!-- send a message form here-->
+{% else %}
+<h1> {img}  {{asd.first_name}} {{asd.last_name}}'s profile</h1>
+<p>Problems:</p>
+{% for problem in all_problems%}
+{% if problem.user_problem.id == asd.id %}
+<p>{{problem.problem}}</p>
+
+{% endif %}
+{% endfor %}
+<form action="/main/Add-reply2/{{ request.session.user_id }}" method="POST">
+                    {% csrf_token %}
+                <div class="massenger">
+                  <div class="title">
+                    <div class="img-profile">
+                      <img src="{{sender.img}}" />
+                    </div>
+                    <span>{{asd.first_name}}</span>
+                    <i class="fas fa-lg fa-ellipsis-v"></i>
+                  </div>
+                   <iframe src='/main/chat'  title="W3Schools Free Online Web Tutorials" style="height: 400px;"></iframe> 
+
+
+                    <div id="chatBoxSend">
+                      <span id="smile">
+                        <i class="fa fa-smile" aria-hidden="true"></i>
+                      </span>
+                      <input placeholder="Message..." type="text" id="msgBoxSend" name="masg" />
+                      <span id="sendMsg">
+                        <input type="submit" name="sendMsg" value="send">
+                      </span>
+                    
+                  </div>
+                </div>
+                </form>
+{% endif %}
+{% endif %}
+
+
+
+
+</body>
+
+</html>
